@@ -9,6 +9,12 @@
 
 This project uses **Machine Learning** to predict student placement based on academic and other relevant student features. The workflow focuses on preparing the data, exploring patterns, training a prediction model, and evaluating its performance.
 
+## 🚀 Live Demo
+
+Try the Student Placement Prediction web app here:
+
+👉 **[Open Student Placement Prediction App](https://student-placement-prediction-01.streamlit.app/)**
+
 ## 🚀 Project Workflow
 
 1. 📥 Data Collection
@@ -30,6 +36,7 @@ This project uses **Machine Learning** to predict student placement based on aca
 | 📈 | Seaborn |
 | 🤖 | Scikit-learn |
 | 🧠 | Machine Learning |
+| 🌐 | Streamlit |
 
 ## ✨ Key Skills Demonstrated
 
