@@ -29,8 +29,9 @@ iq = st.number_input(
 prev_sem_result = st.number_input(
     "Previous Semester Result",
     min_value=0.0,
-    max_value=100.0,
-    value=70.0
+    max_value=10.0,
+    value=6.5,
+    step=0.1
 )
 
 cgpa = st.number_input(
@@ -44,8 +45,9 @@ cgpa = st.number_input(
 academic_performance = st.number_input(
     "Academic Performance",
     min_value=0.0,
-    max_value=100.0,
-    value=70.0
+    max_value=10.0,
+    value=7.0,
+    step=0.1
 )
 
 internship = st.selectbox(
@@ -56,15 +58,17 @@ internship = st.selectbox(
 extra_curricular = st.number_input(
     "Extra Curricular Score",
     min_value=0.0,
-    max_value=100.0,
-    value=50.0
+    max_value=10.0,
+    value=7.0,
+    step=0.1
 )
 
 communication = st.number_input(
     "Communication Skills",
     min_value=0.0,
     max_value=10.0,
-    value=7.0
+    value=7.0,
+    step=0.1
 )
 
 projects = st.number_input(
@@ -80,7 +84,7 @@ internship_value = 1 if internship == "Yes" else 0
 # Prediction button
 if st.button("🔮 Predict Placement"):
 
-    # Create input DataFrame
+    # Create input DataFrame using the model's expected feature names
     new_student = pd.DataFrame({
         "IQ": [iq],
         "Prev_Sem_Result": [prev_sem_result],
@@ -103,16 +107,19 @@ if st.button("🔮 Predict Placement"):
     else:
         st.error("❌ Prediction: Student is likely to be NOT PLACED.")
 
-    # Show probability
+    # Show probabilities using the model's actual class order
     if hasattr(model, "predict_proba"):
-        probability = model.predict_proba(new_student)[0]
+        probabilities = model.predict_proba(new_student)[0]
+        classes = list(model.classes_)
 
         st.write("### Prediction Probability")
 
-        st.write(
-            f"Not Placed: {probability[0] * 100:.2f}%"
-        )
+        if 0 in classes:
+            not_placed_prob = probabilities[classes.index(0)] * 100
+            st.write(f"Not Placed: {not_placed_prob:.2f}%")
 
-        st.write(
-            f"Placed: {probability[1] * 100:.2f}%"
-        )
+        if 1 in classes:
+            placed_prob = probabilities[classes.index(1)] * 100
+            st.write(f"Placed: {placed_prob:.2f}%")
+
+    st.caption("Note: This is a model-based estimate, not a guarantee of actual placement.")
